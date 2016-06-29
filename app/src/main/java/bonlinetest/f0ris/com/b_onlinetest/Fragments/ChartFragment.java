@@ -1,6 +1,5 @@
 package bonlinetest.f0ris.com.b_onlinetest.Fragments;
 
-
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -21,43 +20,36 @@ import java.text.FieldPosition;
 import java.text.Format;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 
 import bonlinetest.f0ris.com.b_onlinetest.AppController;
+import bonlinetest.f0ris.com.b_onlinetest.Models.Active;
 import bonlinetest.f0ris.com.b_onlinetest.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class ChartFragment extends Fragment {
 
     private static final float STROKE_WIDTH = 3;
-    private XYPlot plot;
+    private XYPlot dynamicPlot;
+    private MyPlotUpdater plotUpdater;
+    DynamicDataSource data;
+    private Thread myThread;
 
 
     private class MyPlotUpdater implements Observer {
         Plot plot;
-
         public MyPlotUpdater(Plot plot) {
             this.plot = plot;
         }
-
         @Override
         public void update(Observable o, Object arg) {
             plot.redraw();
         }
     }
 
-    private XYPlot dynamicPlot;
-    private MyPlotUpdater plotUpdater;
-    SampleDynamicXYDatasource data;
-    private Thread myThread;
-
-    public ChartFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,18 +57,13 @@ public class ChartFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_chart, container, false);
 
-
         dynamicPlot = (XYPlot) view.findViewById(R.id.dynamicXYPlot);
         plotUpdater = new MyPlotUpdater(dynamicPlot);
 
-        // only display whole numbers in domain labels
-        dynamicPlot.getGraphWidget().setDomainValueFormat(new DecimalFormat("0"));
 
-        // getInstance and position datasets:
-        data = new SampleDynamicXYDatasource();
-        SampleDynamicSeries sine1Series = new SampleDynamicSeries(data, 0, "Bid");
-        SampleDynamicSeries sine2Series = new SampleDynamicSeries(data, 1, "Offer");
-
+        data = new DynamicDataSource();
+        DynamicSeries sine1Series = new DynamicSeries(data, 0, "Bid");
+        DynamicSeries sine2Series = new DynamicSeries(data, 1, "Offer");
 
         LineAndPointFormatter formatter1 = new LineAndPointFormatter(
                 Color.rgb(200, 0, 0), null, null, null);
@@ -94,13 +81,10 @@ public class ChartFragment extends Fragment {
 
         data.addObserver(plotUpdater);
 
-
-        dynamicPlot.setDomainStep(XYStepMode.INCREMENT_BY_VAL, 1000*60);//one minute
-
         dynamicPlot.setRangeStep(XYStepMode.INCREMENT_BY_VAL, 0.0001);
-
         dynamicPlot.setRangeValueFormat(new DecimalFormat("#.######"));
 
+        dynamicPlot.setDomainStep(XYStepMode.INCREMENT_BY_VAL, 1000*60);//one minute
         //HH:mm format for X axis
         dynamicPlot.setDomainValueFormat(new Format() {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
@@ -117,15 +101,13 @@ public class ChartFragment extends Fragment {
             }
         });
 
-        //TODO
         dynamicPlot.setRangeBoundaries(0, 2, BoundaryMode.AUTO);
-
         return view;
     }
 
     @Override
     public void onResume() {
-        // kick off the data generating thread:
+        // kick off the data getting thread:
         myThread = new Thread(data);
         myThread.start();
         super.onResume();
@@ -137,10 +119,8 @@ public class ChartFragment extends Fragment {
         super.onPause();
     }
 
-
-    class SampleDynamicXYDatasource implements Runnable {
-
-        // encapsulates management of the observers watching this datasource for update events:
+    class DynamicDataSource implements Runnable {
+        // encapsulates management of the observers watching this dataSource for update events:
         class MyObservable extends Observable {
             @Override
             public void notifyObservers() {
@@ -160,37 +140,18 @@ public class ChartFragment extends Fragment {
             keepRunning = false;
         }
 
-        //@Override
+        @Override
         public void run() {
             try {
                 keepRunning = true;
-                boolean isRising = true;
                 while (keepRunning) {
-                    Thread.sleep(10); // decrease or remove to speed up the refresh rate.
+                    Thread.sleep(1000); // decrease or remove to speed up the refresh rate.
+//                    Thread.sleep(1000);
                     notifier.notifyObservers();
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
-
-        public int getItemCount(int series) {
-            return AppController.datas.size();
-        }
-
-        public Number getX(int series, int index) {
-            if (index >= 1) {
-                throw new IllegalArgumentException();
-            }
-            return index;
-        }
-
-        public Number getY(int series, int index) {
-            if (index >= AppController.datas.size()) {
-                throw new IllegalArgumentException();
-            }
-
-            return AppController.datas.get(index).prices[series];
         }
 
         public void addObserver(Observer observer) {
@@ -200,17 +161,17 @@ public class ChartFragment extends Fragment {
         public void removeObserver(Observer observer) {
             notifier.deleteObserver(observer);
         }
-
     }
 
 
-    class SampleDynamicSeries implements XYSeries {
-        private SampleDynamicXYDatasource datasource;
+    class DynamicSeries implements XYSeries {
+        private DynamicDataSource dataSource;
+        private ArrayList<Active> data = AppController.data;
         private int seriesIndex;
         private String title;
 
-        public SampleDynamicSeries(SampleDynamicXYDatasource datasource, int seriesIndex, String title) {
-            this.datasource = datasource;
+        public DynamicSeries(DynamicDataSource datasource, int seriesIndex, String title) {
+            this.dataSource = datasource;
             this.seriesIndex = seriesIndex;
             this.title = title;
         }
@@ -222,21 +183,17 @@ public class ChartFragment extends Fragment {
 
         @Override
         public int size() {
-            return AppController.datas.size();
+            return data.size();
         }
 
         @Override
         public Number getX(int index) {
-//            if (AppController.active == null)
-//                return 0;
-            return AppController.datas.get(index).date.getTime();
+            return data.get(index).date.getTime();
         }
 
         @Override
         public Number getY(int index) {
-//            if (AppController.active == null)
-//                return 0;
-            return AppController.datas.get(index).prices[seriesIndex];
+            return data.get(index).prices[seriesIndex];
         }
     }
 }

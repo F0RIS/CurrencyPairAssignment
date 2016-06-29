@@ -14,7 +14,7 @@ public class AppController extends Application {
 
     private static Context context;
     private static AppController instance;
-    public static ArrayList<Active> datas = new ArrayList<>();
+    public static ArrayList<Active> data = new ArrayList<>();
 
     @Override
     public void onCreate() {

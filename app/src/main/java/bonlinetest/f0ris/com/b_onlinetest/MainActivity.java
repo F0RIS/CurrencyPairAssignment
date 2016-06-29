@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         String response = RequestDealer.requestActive();
                         System.out.println(response);
-                        AppController.datas.add(JsonParser.parseActive(response));
+                        AppController.data.add(JsonParser.parseActive(response));
                         Thread.sleep(1000);
                     } catch (IOException e) {
                         e.printStackTrace();
