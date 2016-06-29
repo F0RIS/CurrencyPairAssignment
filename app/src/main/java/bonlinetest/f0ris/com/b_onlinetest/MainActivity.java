@@ -6,6 +6,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import bonlinetest.f0ris.com.b_onlinetest.Models.Active;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -15,6 +17,10 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+        Active active = JsonParser.parseActive("EUR/USD,1467220815591,1.10,996,1.11,001,1.10489,1.11309,1.10662");
+
+        System.out.println();
     }
 
     @Override
