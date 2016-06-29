@@ -3,6 +3,8 @@ package bonlinetest.f0ris.com.b_onlinetest;
 import android.app.Application;
 import android.content.Context;
 
+import java.util.ArrayList;
+
 import bonlinetest.f0ris.com.b_onlinetest.Models.Active;
 
 /**
@@ -12,7 +14,7 @@ public class AppController extends Application {
 
     private static Context context;
     private static AppController instance;
-    public static Active active;
+    public static ArrayList<Active> datas = new ArrayList<>();
 
     @Override
     public void onCreate() {

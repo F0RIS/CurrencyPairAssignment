@@ -17,4 +17,34 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="simple_xy">
+        <item name="graphMarginTop">5dp</item>
+        <item name="graphMarginBottom">25dp</item>
+        <item name="graphMarginLeft">50dp</item>
+        <item name="graphMarginRight">20dp</item>
+        <item name="labelTextSize">13sp</item>
+        <item name="rangeLabelTextSize">13sp</item>
+        <item name="domainLabelTextSize">13sp</item>
+        <item name="legendTextSize">15sp</item>
+        <item name="legendIconHeight">15sp</item>
+        <item name="legendIconWidth">15sp</item>
+        <item name="legendHeight">25sp</item>
+        <item name="legendAnchorPosition">right_bottom</item>
+        <item name="android:background">@color/off_white</item>
+        <item name="backgroundColor">@color/off_white</item>
+        <item name="graphBackgroundColor">@color/off_white</item>
+        <item name="gridBackgroundColor">@color/ap_white</item>
+        <item name="graphDomainLineColor">@color/ap_gray</item>
+        <item name="graphRangeLineColor">@color/ap_gray</item>
+        <item name="rangeTickLabelTextColor">@color/ap_charcoal</item>
+        <item name="domainTickLabelTextColor">@color/ap_charcoal</item>
+        <item name="domainOriginTickLabelTextColor">@color/ap_charcoal</item>
+        <item name="rangeOriginTickLabelTextColor">@color/ap_charcoal</item>
+        <item name="domainOriginLineColor">@color/ap_charcoal</item>
+        <item name="rangeOriginLineColor">@color/ap_charcoal</item>
+        <item name="domainLabelTextColor">@color/ap_black</item>
+        <item name="rangeLabelTextColor">@color/ap_black</item>
+        <item name="legendTextColor">@color/ap_black</item>
+        <item name="labelTextColor">@color/ap_black</item>
+    </style>
 </resources>

@@ -8,11 +8,6 @@ import android.view.MenuItem;
 
 import java.io.IOException;
 
-import bonlinetest.f0ris.com.b_onlinetest.Models.Active;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -22,45 +17,26 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-        Active active = JsonParser.parseActive("EUR/USD,1467220815591,1.10,996,1.11,001,1.10489,1.11309,1.10662");
+//        Active active = JsonParser.parseActive("EUR/USD,1467220815591,1.10,996,1.11,001,1.10489,1.11309,1.10662");
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-//                AppController.active = JsonParser.parseActive("EUR/USD,1467220815591,1.10,996,1.11,001,1.10489,1.11309,1.10662");
-                for (;;) {
+                while (!Thread.interrupted()) {
                     try {
+                        String response = RequestDealer.requestActive();
+                        System.out.println(response);
+                        AppController.datas.add(JsonParser.parseActive(response));
                         Thread.sleep(1000);
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    String response = null;
-                    try {
-                        response = MainActivity.this.run("http://webrates.truefx.com/rates/connect.html?q=ozrates&c=EUR/USD&f=csv&s=n");
-                        System.out.println(response);
-                        AppController.active = JsonParser.parseActive(response);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                 }
-
             }
-        }).start();;
+        }).start();
 
-
-        System.out.println();
-    }
-
-    OkHttpClient client = new OkHttpClient();
-
-    String run(String url) throws IOException {
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-
-        Response response = client.newCall(request).execute();
-        return response.body().string();
     }
 
     @Override
