@@ -12,8 +12,10 @@
     tools:context="bonlinetest.f0ris.com.b_onlinetest.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+    <fragment
+        android:id="@+id/chartFragment"
+        class="bonlinetest.f0ris.com.b_onlinetest.Fragments.ChartFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </RelativeLayout>
