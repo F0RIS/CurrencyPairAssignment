@@ -5,7 +5,7 @@
     android:layout_width="match_parent">
 
     <com.androidplot.xy.XYPlot
-        style="@style/simple_xy"
+        style="@style/active_chart_style"
         android:id="@+id/dynamicXYPlot"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

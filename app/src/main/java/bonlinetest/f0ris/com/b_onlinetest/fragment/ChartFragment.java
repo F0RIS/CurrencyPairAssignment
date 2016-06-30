@@ -34,7 +34,7 @@ public class ChartFragment extends Fragment {
     private XYPlot dynamicPlot;
     private MyPlotUpdater plotUpdater;
     private ActiveDataSource data;
-    private static Active active = new Active("EUR/USD");
+    private static Active ACTIVE = new Active("EUR/USD");
 
     private class MyPlotUpdater implements Observer {
         Plot plot;
@@ -63,10 +63,10 @@ public class ChartFragment extends Fragment {
 
 
         plotUpdater = new MyPlotUpdater(dynamicPlot);
-        data = new ActiveDataSource(active);
+        data = new ActiveDataSource(ACTIVE);
         data.addObserver(plotUpdater);
 
-        DynamicSeries sine1Series = new DynamicSeries(data, 0, active.name);
+        DynamicSeries sine1Series = new DynamicSeries(data, 0, ACTIVE.name);
 
         LineAndPointFormatter formatter1 = new LineAndPointFormatter(
                 Color.rgb(0, 0, 200), null, null, null);
