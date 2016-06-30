@@ -8,6 +8,8 @@ import bonlinetest.f0ris.com.b_onlinetest.AppController;
 
 public class DynamicDataSource implements Runnable {
 
+//    ArrayList<Active.Position> data = AppController.EUR_USD_Active.positions;
+
     // encapsulates management of the observers watching this dataSource for update events:
     class MyObservable extends Observable {
         @Override
@@ -51,14 +53,14 @@ public class DynamicDataSource implements Runnable {
     }
 
     public int getItemCount(int seriesIndex) {
-        return AppController.data.size();
+        return AppController.EUR_USD_Active.positions.size();
     }
 
     public Number getX(int seriesIndex, int index) {
-        return AppController.data.get(index).date.getTime();
+        return AppController.EUR_USD_Active.positions.get(index).date.getTime();
     }
 
     public Number getY(int seriesIndex, int index) {
-        return AppController.data.get(index).prices[seriesIndex];
+        return AppController.EUR_USD_Active.positions.get(index).value;
     }
 }

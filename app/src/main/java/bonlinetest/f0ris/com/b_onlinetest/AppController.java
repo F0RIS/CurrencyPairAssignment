@@ -15,6 +15,7 @@ public class AppController extends Application {
     private static Context context;
     private static AppController instance;
     public static ArrayList<Active> data = new ArrayList<>();
+    public static Active EUR_USD_Active;
 
     @Override
     public void onCreate() {

@@ -10,7 +10,7 @@ public class JsonParser {
     private static Calendar calendar = Calendar.getInstance();
 
     public static Active parseActive(String response) {
-
+/*
         String[] arr = response.split(",");
 
         JsonParser.calendar.setTimeInMillis(Long.parseLong(arr[1]));
@@ -18,6 +18,13 @@ public class JsonParser {
         // glue values
         float[] prices = {Float.parseFloat(arr[2] + arr[3]), Float.parseFloat(arr[4] + arr[5])};
 
-        return new Active(arr[0], JsonParser.calendar.getTime(), prices);
+        return new Active(arr[0], JsonParser.calendar.getTime(), prices);*/
+        return null;
+    }
+
+    public static Active.Position parsePosition(String response) {
+        String[] arr = response.split(",");
+        JsonParser.calendar.setTimeInMillis(Long.parseLong(arr[1]));
+        return new Active.Position(JsonParser.calendar.getTime(), Float.parseFloat(arr[2] + arr[3])); // glue values
     }
 }

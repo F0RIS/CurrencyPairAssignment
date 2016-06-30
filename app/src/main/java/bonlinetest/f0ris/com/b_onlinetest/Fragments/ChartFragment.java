@@ -3,6 +3,7 @@ package bonlinetest.f0ris.com.b_onlinetest.Fragments;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,12 +20,15 @@ import java.text.FieldPosition;
 import java.text.Format;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 
+import bonlinetest.f0ris.com.b_onlinetest.AppController;
 import bonlinetest.f0ris.com.b_onlinetest.Chart.DynamicDataSource;
 import bonlinetest.f0ris.com.b_onlinetest.Chart.DynamicSeries;
+import bonlinetest.f0ris.com.b_onlinetest.Models.Active;
 import bonlinetest.f0ris.com.b_onlinetest.R;
 
 
@@ -35,7 +39,13 @@ public class ChartFragment extends Fragment {
     private MyPlotUpdater plotUpdater;
     private DynamicDataSource data;
 
+    private ArrayList<Active> actives = new ArrayList<>();
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     private class MyPlotUpdater implements Observer {
         Plot plot;
@@ -62,22 +72,15 @@ public class ChartFragment extends Fragment {
 
 
         data = new DynamicDataSource();
-        DynamicSeries sine1Series = new DynamicSeries(data, 0, "Bid");
-        DynamicSeries sine2Series = new DynamicSeries(data, 1, "Offer");
+        DynamicSeries sine1Series = new DynamicSeries(data, 0, "EUR/USD");
+
 
         LineAndPointFormatter formatter1 = new LineAndPointFormatter(
-                Color.rgb(200, 0, 0), null, null, null);
+                Color.rgb(0, 0, 200), null, null, null);
         formatter1.getLinePaint().setStrokeJoin(Paint.Join.ROUND);
         formatter1.getLinePaint().setStrokeWidth(STROKE_WIDTH);
         dynamicPlot.addSeries(sine1Series,
                 formatter1);
-
-        LineAndPointFormatter formatter2 = new LineAndPointFormatter(
-                Color.rgb(0, 0, 200), null, null, null);
-        formatter2.getLinePaint().setStrokeJoin(Paint.Join.ROUND);
-        formatter2.getLinePaint().setStrokeWidth(STROKE_WIDTH);
-        dynamicPlot.addSeries(sine2Series,
-                formatter2);
 
         data.addObserver(plotUpdater);
 

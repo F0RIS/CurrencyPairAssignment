@@ -6,7 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.io.IOException;
+import bonlinetest.f0ris.com.b_onlinetest.Models.Active;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,15 +22,13 @@ public class MainActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                Active EUR_USD_Active = new Active("EUR/USD");
+                AppController.EUR_USD_Active = EUR_USD_Active;
                 while (!Thread.interrupted()) {
                     try {
-                        String response = RequestDealer.requestActive();
-                        System.out.println(response);
-                        AppController.data.add(JsonParser.parseActive(response));
+                        EUR_USD_Active.getPositionsUpdates();
                         Thread.sleep(1000);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
+                    }  catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }

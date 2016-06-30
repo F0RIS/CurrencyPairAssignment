@@ -10,7 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         androidplot.renderMode="use_background_thread"
-        ap:label="EUR/USD"
+        ap:label="Активы"
         ap:rangeLabel="Значение"
         ap:legendTextSize="15sp"
         ap:legendIconHeight="15dp"
