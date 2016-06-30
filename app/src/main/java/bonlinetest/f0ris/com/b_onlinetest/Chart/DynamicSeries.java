@@ -2,15 +2,9 @@ package bonlinetest.f0ris.com.b_onlinetest.Chart;
 
 import com.androidplot.xy.XYSeries;
 
-import java.util.ArrayList;
-
-import bonlinetest.f0ris.com.b_onlinetest.AppController;
-import bonlinetest.f0ris.com.b_onlinetest.Models.Active;
-
 
 public class DynamicSeries implements XYSeries {
     private DynamicDataSource dataSource;
-    private ArrayList<Active> data = AppController.data;
     private int seriesIndex;
     private String title;
 
