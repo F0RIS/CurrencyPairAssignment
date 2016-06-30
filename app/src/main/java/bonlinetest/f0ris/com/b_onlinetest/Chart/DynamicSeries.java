@@ -4,11 +4,11 @@ import com.androidplot.xy.XYSeries;
 
 
 public class DynamicSeries implements XYSeries {
-    private DynamicDataSource dataSource;
+    private ActiveDataSource dataSource;
     private int seriesIndex;
     private String title;
 
-    public DynamicSeries(DynamicDataSource datasource, int seriesIndex, String title) {
+    public DynamicSeries(ActiveDataSource datasource, int seriesIndex, String title) {
         this.dataSource = datasource;
         this.seriesIndex = seriesIndex;
         this.title = title;

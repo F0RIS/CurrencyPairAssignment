@@ -3,14 +3,17 @@ package bonlinetest.f0ris.com.b_onlinetest.Chart;
 import java.util.Observable;
 import java.util.Observer;
 
-import bonlinetest.f0ris.com.b_onlinetest.AppController;
+import bonlinetest.f0ris.com.b_onlinetest.Models.Active;
 
 
-public class DynamicDataSource implements Runnable {
+public class ActiveDataSource implements Runnable {
 
-//    ArrayList<Active.Position> data = AppController.EUR_USD_Active.positions;
+    private Active active;
 
-    // encapsulates management of the observers watching this dataSource for update events:
+    public ActiveDataSource(Active active) {
+        this.active = active;
+    }
+
     class MyObservable extends Observable {
         @Override
         public void notifyObservers() {
@@ -35,8 +38,8 @@ public class DynamicDataSource implements Runnable {
         try {
             keepRunning = true;
             while (keepRunning) {
-                Thread.sleep(1000); // decrease or remove to speed up the refresh rate.
-//                    Thread.sleep(1000);
+                Thread.sleep(1000);
+                active.getPositionsUpdates();
                 notifier.notifyObservers();
             }
         } catch (InterruptedException e) {
@@ -53,14 +56,14 @@ public class DynamicDataSource implements Runnable {
     }
 
     public int getItemCount(int seriesIndex) {
-        return AppController.EUR_USD_Active.positions.size();
+        return active.positions.size();
     }
 
     public Number getX(int seriesIndex, int index) {
-        return AppController.EUR_USD_Active.positions.get(index).date.getTime();
+        return active.positions.get(index).date.getTime();
     }
 
     public Number getY(int seriesIndex, int index) {
-        return AppController.EUR_USD_Active.positions.get(index).value;
+        return active.positions.get(index).value;
     }
 }

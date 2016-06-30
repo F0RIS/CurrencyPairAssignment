@@ -1,11 +1,10 @@
 package bonlinetest.f0ris.com.b_onlinetest.Models;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import bonlinetest.f0ris.com.b_onlinetest.JsonParser;
-import bonlinetest.f0ris.com.b_onlinetest.RequestDealer;
+import bonlinetest.f0ris.com.b_onlinetest.ActiveParser;
+import bonlinetest.f0ris.com.b_onlinetest.Network.RequestDealer;
 
 public class Active {
 
@@ -29,9 +28,9 @@ public class Active {
     public void getPositionsUpdates(){
         try {
             String response = RequestDealer.requestActiveUpdate(this.name);
-            this.positions.add(JsonParser.parsePosition(response));
             System.out.println(response);
-        } catch (IOException e) {
+            this.positions.add(ActiveParser.parsePosition(response));
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
