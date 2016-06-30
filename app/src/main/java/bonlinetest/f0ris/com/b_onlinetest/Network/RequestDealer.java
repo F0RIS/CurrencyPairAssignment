@@ -1,4 +1,4 @@
-package bonlinetest.f0ris.com.b_onlinetest.Network;
+package bonlinetest.f0ris.com.b_onlinetest.network;
 
 import java.io.IOException;
 

@@ -1,9 +1,9 @@
-package bonlinetest.f0ris.com.b_onlinetest.Chart;
+package bonlinetest.f0ris.com.b_onlinetest.chart;
 
 import java.util.Observable;
 import java.util.Observer;
 
-import bonlinetest.f0ris.com.b_onlinetest.Models.Active;
+import bonlinetest.f0ris.com.b_onlinetest.model.Active;
 
 
 public class ActiveDataSource implements Runnable {

@@ -1,10 +1,12 @@
-package bonlinetest.f0ris.com.b_onlinetest;
+package bonlinetest.f0ris.com.b_onlinetest.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import bonlinetest.f0ris.com.b_onlinetest.R;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -3,7 +3,7 @@ package bonlinetest.f0ris.com.b_onlinetest;
 import java.text.ParseException;
 import java.util.Calendar;
 
-import bonlinetest.f0ris.com.b_onlinetest.Models.Active;
+import bonlinetest.f0ris.com.b_onlinetest.model.Active;
 
 
 public class ActiveParser {

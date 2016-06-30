@@ -1,4 +1,4 @@
-package bonlinetest.f0ris.com.b_onlinetest.Fragments;
+package bonlinetest.f0ris.com.b_onlinetest.fragment;
 
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -23,9 +23,9 @@ import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 
-import bonlinetest.f0ris.com.b_onlinetest.Chart.ActiveDataSource;
-import bonlinetest.f0ris.com.b_onlinetest.Chart.DynamicSeries;
-import bonlinetest.f0ris.com.b_onlinetest.Models.Active;
+import bonlinetest.f0ris.com.b_onlinetest.chart.ActiveDataSource;
+import bonlinetest.f0ris.com.b_onlinetest.chart.DynamicSeries;
+import bonlinetest.f0ris.com.b_onlinetest.model.Active;
 import bonlinetest.f0ris.com.b_onlinetest.R;
 
 

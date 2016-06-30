@@ -1,4 +1,4 @@
-package bonlinetest.f0ris.com.b_onlinetest.Chart;
+package bonlinetest.f0ris.com.b_onlinetest.chart;
 
 import com.androidplot.xy.XYSeries;
 

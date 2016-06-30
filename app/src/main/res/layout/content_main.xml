@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="bonlinetest.f0ris.com.b_onlinetest.MainActivity"
+    tools:context=".activity.MainActivity"
     tools:showIn="@layout/activity_main">
 
     <fragment
         android:id="@+id/chartFragment"
-        class="bonlinetest.f0ris.com.b_onlinetest.Fragments.ChartFragment"
+        class="bonlinetest.f0ris.com.b_onlinetest.fragment.ChartFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

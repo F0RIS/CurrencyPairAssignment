@@ -1,10 +1,10 @@
-package bonlinetest.f0ris.com.b_onlinetest.Models;
+package bonlinetest.f0ris.com.b_onlinetest.model;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 import bonlinetest.f0ris.com.b_onlinetest.ActiveParser;
-import bonlinetest.f0ris.com.b_onlinetest.Network.RequestDealer;
+import bonlinetest.f0ris.com.b_onlinetest.network.RequestDealer;
 
 public class Active {
 
