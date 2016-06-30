@@ -34,8 +34,7 @@ public class ChartFragment extends Fragment {
     private XYPlot dynamicPlot;
     private MyPlotUpdater plotUpdater;
     private ActiveDataSource data;
-
-    private Active active = new Active("EUR/USD");
+    private static Active active = new Active("EUR/USD");
 
     private class MyPlotUpdater implements Observer {
         Plot plot;
@@ -62,8 +61,9 @@ public class ChartFragment extends Fragment {
 
         dynamicPlot = (XYPlot) view.findViewById(R.id.dynamicXYPlot);
 
-        data = new ActiveDataSource(active);
+
         plotUpdater = new MyPlotUpdater(dynamicPlot);
+        data = new ActiveDataSource(active);
         data.addObserver(plotUpdater);
 
         DynamicSeries sine1Series = new DynamicSeries(data, 0, active.name);
@@ -84,11 +84,13 @@ public class ChartFragment extends Fragment {
         //HH:mm format for X axis
         dynamicPlot.setDomainValueFormat(new Format() {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+
             @Override
             public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
                 toAppendTo.append(simpleDateFormat.format(((Number) obj).longValue()));
                 return toAppendTo;
             }
+
             @Override
             public Object parseObject(String source, ParsePosition pos) {
                 return null;
