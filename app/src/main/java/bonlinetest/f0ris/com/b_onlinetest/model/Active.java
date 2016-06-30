@@ -3,7 +3,7 @@ package bonlinetest.f0ris.com.b_onlinetest.model;
 import java.util.ArrayList;
 import java.util.Date;
 
-import bonlinetest.f0ris.com.b_onlinetest.ActiveParser;
+import bonlinetest.f0ris.com.b_onlinetest.Parser;
 import bonlinetest.f0ris.com.b_onlinetest.network.RequestDealer;
 
 public class Active {
@@ -29,7 +29,7 @@ public class Active {
         try {
             String response = RequestDealer.requestActiveUpdate(this.name);
             System.out.println(response);
-            this.positions.add(ActiveParser.parsePosition(response));
+            this.positions.add(Parser.parsePosition(response));
         } catch (Exception e) {
             e.printStackTrace();
         }
