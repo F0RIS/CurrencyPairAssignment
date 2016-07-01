@@ -1,30 +1,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ap="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="5dp"
-    android:layout_width="match_parent">
+    android:layout_margin="5dp">
 
     <com.androidplot.xy.XYPlot
-        style="@style/active_chart_style"
         android:id="@+id/dynamicXYPlot"
+        style="@style/active_chart_style"
+        androidplot.renderMode="use_background_thread"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        androidplot.renderMode="use_background_thread"
         ap:label="Актив"
-        ap:rangeLabel="Значение"
-        ap:legendTextSize="15sp"
+        ap:legendAnchorPosition="right_bottom"
+        ap:legendHeight="25dp"
         ap:legendIconHeight="15dp"
         ap:legendIconWidth="15dp"
-        ap:legendHeight="25dp"
-        ap:legendAnchorPosition="right_bottom"
-
+        ap:legendTextSize="15sp"
+        ap:rangeLabel="Значение"
         />
-
-    <!--<com.androidplot.xy.XYPlot
-        android:id="@+id/dynamicXYPlot"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        ap:label="A Simple XY Plot"
-        ap:rangeLabel="range"
-        ap:domainLabel="domain"/>-->
 </LinearLayout>

@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putParcelable("active", active);
         super.onSaveInstanceState(outState);
+        outState.putParcelable("active", active);
     }
 
     @Override

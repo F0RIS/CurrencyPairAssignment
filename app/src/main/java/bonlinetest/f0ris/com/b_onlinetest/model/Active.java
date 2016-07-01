@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 
+import bonlinetest.f0ris.com.b_onlinetest.BuildConfig;
 import bonlinetest.f0ris.com.b_onlinetest.Parser;
 import bonlinetest.f0ris.com.b_onlinetest.network.RequestDealer;
 
@@ -20,7 +21,9 @@ public class Active implements Parcelable {
     public void getPositionsUpdates() {
         try {
             String response = RequestDealer.requestActiveUpdate(this.name);
-            System.out.println(response);
+            if (BuildConfig.DEBUG){
+                System.out.println(response);
+            }
             this.positions.add(Parser.parsePosition(response));
         } catch (Exception e) {
             e.printStackTrace();
