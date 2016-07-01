@@ -31,10 +31,26 @@ import bonlinetest.f0ris.com.b_onlinetest.R;
 
 public class ChartFragment extends Fragment {
 
+    public static final String TAG = "ChartFragment";
     private XYPlot dynamicPlot;
     private MyPlotUpdater plotUpdater;
     private ActiveDataSource data;
-    private static Active ACTIVE = new Active("EUR/USD");
+    private Active active;
+
+
+    public ChartFragment() {
+        active = (Active) getArguments().getSerializable("active");
+    }
+
+    public static ChartFragment newInstance(Active active) {
+        ChartFragment chartFragment = new ChartFragment();
+
+        Bundle args = new Bundle();
+        args.putSerializable("active", active);
+        chartFragment.setArguments(args);
+
+        return chartFragment;
+    }
 
     private class MyPlotUpdater implements Observer {
         Plot plot;
@@ -61,20 +77,26 @@ public class ChartFragment extends Fragment {
 
         dynamicPlot = (XYPlot) view.findViewById(R.id.dynamicXYPlot);
 
-
         plotUpdater = new MyPlotUpdater(dynamicPlot);
-        data = new ActiveDataSource(ACTIVE);
+        data = new ActiveDataSource(active);
         data.addObserver(plotUpdater);
 
-        DynamicSeries sine1Series = new DynamicSeries(data, 0, ACTIVE.name);
+        addSeries();
+        setPlotParams();
+        return view;
+    }
 
+    private void addSeries() {
+        DynamicSeries sine1Series = new DynamicSeries(data, 0, active.name);
         LineAndPointFormatter formatter1 = new LineAndPointFormatter(
                 Color.rgb(0, 0, 200), null, null, null);
         formatter1.getLinePaint().setStrokeJoin(Paint.Join.ROUND);
         formatter1.getLinePaint().setStrokeWidth(3);
         dynamicPlot.addSeries(sine1Series,
                 formatter1);
+    }
 
+    private void setPlotParams() {
 
         dynamicPlot.setRangeStep(XYStepMode.INCREMENT_BY_VAL, 0.0001);
         dynamicPlot.setRangeValueFormat(new DecimalFormat("#.######"));
@@ -98,7 +120,6 @@ public class ChartFragment extends Fragment {
         });
 
         dynamicPlot.setRangeBoundaries(0, 0, BoundaryMode.AUTO);
-        return view;
     }
 
     @Override
