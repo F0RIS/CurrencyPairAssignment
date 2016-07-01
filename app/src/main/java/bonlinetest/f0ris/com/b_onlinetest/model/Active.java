@@ -1,11 +1,12 @@
 package bonlinetest.f0ris.com.b_onlinetest.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import bonlinetest.f0ris.com.b_onlinetest.Parser;
 import bonlinetest.f0ris.com.b_onlinetest.network.RequestDealer;
 
-public class Active {
+public class Active implements Serializable {
 
     public String name;
     public ArrayList<Position> positions = new ArrayList<>();

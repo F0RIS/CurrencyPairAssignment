@@ -3,6 +3,7 @@ package bonlinetest.f0ris.com.b_onlinetest.fragment;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,10 +24,10 @@ import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 
+import bonlinetest.f0ris.com.b_onlinetest.R;
 import bonlinetest.f0ris.com.b_onlinetest.chart.ActiveDataSource;
 import bonlinetest.f0ris.com.b_onlinetest.chart.DynamicSeries;
 import bonlinetest.f0ris.com.b_onlinetest.model.Active;
-import bonlinetest.f0ris.com.b_onlinetest.R;
 
 
 public class ChartFragment extends Fragment {
@@ -38,8 +39,19 @@ public class ChartFragment extends Fragment {
     private Active active;
 
 
-    public ChartFragment() {
-        active = (Active) getArguments().getSerializable("active");
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState == null)
+            active = (Active) getArguments().getSerializable("active");
+        else
+            active = (Active) savedInstanceState.getSerializable("active");
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("active", active);
     }
 
     public static ChartFragment newInstance(Active active) {

@@ -8,10 +8,16 @@
     tools:context=".activity.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <fragment
+
+    <!--<fragment
         android:id="@+id/chartFragment"
         class="bonlinetest.f0ris.com.b_onlinetest.fragment.ChartFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"/>-->
+
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>
