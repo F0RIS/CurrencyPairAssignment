@@ -39,21 +39,6 @@ public class ChartFragment extends Fragment {
     private Active active;
 
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (savedInstanceState == null)
-            active = (Active) getArguments().getSerializable("active");
-        else
-            active = (Active) savedInstanceState.getSerializable("active");
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putSerializable("active", active);
-    }
-
     public static ChartFragment newInstance(Active active) {
         ChartFragment chartFragment = new ChartFragment();
 
@@ -63,6 +48,13 @@ public class ChartFragment extends Fragment {
 
         return chartFragment;
     }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        active = (Active) getArguments().getSerializable("active");
+        super.onCreate(savedInstanceState);
+    }
+
 
     private class MyPlotUpdater implements Observer {
         Plot plot;

@@ -1,6 +1,7 @@
 package bonlinetest.f0ris.com.b_onlinetest.activity;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +14,8 @@ import bonlinetest.f0ris.com.b_onlinetest.model.Active;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Active active;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +24,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        Active active = new Active("EUR/USD");
+        active = new Active("EUR/USD");
+
         ChartFragment chartFragment = ChartFragment.newInstance(active);
 
         FragmentTransaction transaction = this.getSupportFragmentManager().beginTransaction();
@@ -29,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
         transaction.commitAllowingStateLoss();
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+//        outState.putSerializable("active", active);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
