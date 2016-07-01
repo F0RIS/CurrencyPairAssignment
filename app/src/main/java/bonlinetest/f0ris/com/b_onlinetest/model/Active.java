@@ -1,7 +1,6 @@
 package bonlinetest.f0ris.com.b_onlinetest.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import bonlinetest.f0ris.com.b_onlinetest.Parser;
 import bonlinetest.f0ris.com.b_onlinetest.network.RequestDealer;
@@ -10,16 +9,6 @@ public class Active {
 
     public String name;
     public ArrayList<Position> positions = new ArrayList<>();
-
-    public static class Position{
-        public Date date;
-        public float value;
-
-        public Position(Date date, float value) {
-            this.date = date;
-            this.value = value;
-        }
-    }
 
     public Active(String activeName) {
         this.name = activeName;
