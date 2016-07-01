@@ -1,7 +1,6 @@
 package bonlinetest.f0ris.com.b_onlinetest.activity;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -24,7 +23,10 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        active = new Active("EUR/USD");
+        if (savedInstanceState == null)
+            active = new Active("EUR/USD");
+        else
+            active = savedInstanceState.getParcelable("active");
 
         ChartFragment chartFragment = ChartFragment.newInstance(active);
 
@@ -34,9 +36,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-//        outState.putSerializable("active", active);
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable("active", active);
+        super.onSaveInstanceState(outState);
     }
 
     @Override

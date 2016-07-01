@@ -39,8 +39,8 @@ public class ActiveDataSource implements Runnable {
             keepRunning = true;
             while (keepRunning) {
                 Thread.sleep(1000);
-                active.getPositionsUpdates();
                 notifier.notifyObservers();
+                active.getPositionsUpdates();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

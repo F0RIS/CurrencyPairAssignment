@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.androidplot.Plot;
 import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.XYPlot;
@@ -34,16 +33,14 @@ public class ChartFragment extends Fragment {
 
     public static final String TAG = "ChartFragment";
     private XYPlot dynamicPlot;
-    private MyPlotUpdater plotUpdater;
     private ActiveDataSource data;
     private Active active;
-
 
     public static ChartFragment newInstance(Active active) {
         ChartFragment chartFragment = new ChartFragment();
 
         Bundle args = new Bundle();
-        args.putSerializable("active", active);
+        args.putParcelable("active", active);
         chartFragment.setArguments(args);
 
         return chartFragment;
@@ -51,23 +48,22 @@ public class ChartFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        active = (Active) getArguments().getSerializable("active");
         super.onCreate(savedInstanceState);
+        active = getArguments().getParcelable("active");
     }
 
+    private class PlotUpdater implements Observer {
+        XYPlot plot;
 
-    private class MyPlotUpdater implements Observer {
-        Plot plot;
-
-        public MyPlotUpdater(Plot plot) {
+        public PlotUpdater(XYPlot plot) {
             this.plot = plot;
         }
 
         @Override
         public void update(Observable o, Object arg) {
             //auto step calculating
-            float range = dynamicPlot.getCalculatedMaxY().floatValue() - dynamicPlot.getCalculatedMinY().floatValue();
-            dynamicPlot.setRangeStep(XYStepMode.INCREMENT_BY_VAL, range / 10.0);
+            float range = plot.getCalculatedMaxY().floatValue() - dynamicPlot.getCalculatedMinY().floatValue();
+            plot.setRangeStep(XYStepMode.INCREMENT_BY_VAL, range / 10.0);
             plot.redraw();
         }
     }
@@ -81,7 +77,7 @@ public class ChartFragment extends Fragment {
 
         dynamicPlot = (XYPlot) view.findViewById(R.id.dynamicXYPlot);
 
-        plotUpdater = new MyPlotUpdater(dynamicPlot);
+        PlotUpdater plotUpdater = new PlotUpdater(dynamicPlot);
         data = new ActiveDataSource(active);
         data.addObserver(plotUpdater);
 
@@ -134,10 +130,17 @@ public class ChartFragment extends Fragment {
         super.onResume();
     }
 
+    /*
     @Override
     public void onPause() {
         data.stopThread();
         super.onPause();
     }
+*/
 
+    @Override
+    public void onDestroy() {
+        data.stopThread();
+        super.onDestroy();
+    }
 }
