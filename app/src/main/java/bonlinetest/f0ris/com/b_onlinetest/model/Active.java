@@ -21,10 +21,21 @@ public class Active implements Parcelable {
     public void getPositionsUpdates() {
         try {
             String response = RequestDealer.requestActiveUpdate(this.name);
-            if (BuildConfig.DEBUG){
+
+            if (BuildConfig.DEBUG) {
                 System.out.println(response);
             }
-            this.positions.add(Parser.parsePosition(response));
+
+            Position newPosition = Parser.parsePosition(response);
+
+            //don't add same data
+            if (positions.size() > 0) {
+                if (newPosition.date.getTime() != positions.get(positions.size() - 1).date.getTime()) {
+                    positions.add(newPosition);
+                }
+            } else {
+                positions.add(newPosition);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
