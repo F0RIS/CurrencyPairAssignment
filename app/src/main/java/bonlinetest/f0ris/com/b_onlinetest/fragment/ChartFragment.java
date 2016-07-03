@@ -62,8 +62,17 @@ public class ChartFragment extends Fragment {
         @Override
         public void update(Observable o, Object arg) {
             //auto step calculating
+
             float range = plot.getCalculatedMaxY().floatValue() - dynamicPlot.getCalculatedMinY().floatValue();
-            plot.setRangeStep(XYStepMode.INCREMENT_BY_VAL, range / 10.0);
+            if (range == 0) {
+                float cur_val = plot.getCalculatedMaxY().floatValue();
+                range = cur_val * 0.05f;
+                plot.setRangeBoundaries(cur_val - range, cur_val + range, BoundaryMode.FIXED);
+            } else {
+                plot.setRangeBoundaries(0, 0, BoundaryMode.AUTO);
+                plot.setRangeStep(XYStepMode.INCREMENT_BY_VAL, range / 10.0);
+            }
+
             plot.redraw();
         }
     }

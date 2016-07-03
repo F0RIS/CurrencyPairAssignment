@@ -28,11 +28,23 @@ public class MainActivity extends AppCompatActivity {
         else
             active = savedInstanceState.getParcelable("active");
 
-        ChartFragment chartFragment = ChartFragment.newInstance(active);
+//        long time = System.currentTimeMillis();
+//        for (int i = 0; i < 1; i++) {
+        //add one record before drawing for fast start
+//            active.positions.add(new Position(new Date(1467405900624L), (float) (1+Math.random()*0.2f)));
+//        }
 
-        FragmentTransaction transaction = this.getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.content, chartFragment, ChartFragment.TAG);
-        transaction.commitAllowingStateLoss();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                active.getPositionsUpdates();//add one record before chart drawing for fast app start
+                ChartFragment chartFragment = ChartFragment.newInstance(active);
+                FragmentTransaction transaction = MainActivity.this.getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.content, chartFragment, ChartFragment.TAG);
+                transaction.commitAllowingStateLoss();
+            }
+        }).start();
+
     }
 
     @Override
