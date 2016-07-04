@@ -29,21 +29,21 @@ import bonlinetest.f0ris.com.b_onlinetest.chart.DynamicSeries;
 import bonlinetest.f0ris.com.b_onlinetest.model.Active;
 
 
-public class ChartFragment extends Fragment {
+public class ActiveChartFragment extends Fragment {
 
     public static final String TAG = "ChartFragment";
     private XYPlot dynamicPlot;
     private ActiveDataSource data;
     private Active active;
 
-    public static ChartFragment newInstance(Active active) {
-        ChartFragment chartFragment = new ChartFragment();
+    public static ActiveChartFragment newInstance(Active active) {
+        ActiveChartFragment activeChartFragment = new ActiveChartFragment();
 
         Bundle args = new Bundle();
         args.putParcelable("active", active);
-        chartFragment.setArguments(args);
+        activeChartFragment.setArguments(args);
 
-        return chartFragment;
+        return activeChartFragment;
     }
 
     @Override
@@ -61,18 +61,17 @@ public class ChartFragment extends Fragment {
 
         @Override
         public void update(Observable o, Object arg) {
-            //auto step calculating
-
             float range = plot.getCalculatedMaxY().floatValue() - dynamicPlot.getCalculatedMinY().floatValue();
-            if (range == 0) {
+
+            if (range == 0) { //if no different values set fixed boundaries
                 float cur_val = plot.getCalculatedMaxY().floatValue();
                 range = cur_val * 0.05f;
                 plot.setRangeBoundaries(cur_val - range, cur_val + range, BoundaryMode.FIXED);
             } else {
+                //auto step calculating
                 plot.setRangeBoundaries(0, 0, BoundaryMode.AUTO);
                 plot.setRangeStep(XYStepMode.INCREMENT_BY_VAL, range / 10.0);
             }
-
             plot.redraw();
         }
     }
@@ -133,19 +132,10 @@ public class ChartFragment extends Fragment {
 
     @Override
     public void onResume() {
-        // kick off the data getting thread:
         Thread myThread = new Thread(data);
         myThread.start();
         super.onResume();
     }
-
-    /*
-    @Override
-    public void onPause() {
-        data.stopThread();
-        super.onPause();
-    }
-*/
 
     @Override
     public void onDestroy() {

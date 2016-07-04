@@ -8,7 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import bonlinetest.f0ris.com.b_onlinetest.R;
-import bonlinetest.f0ris.com.b_onlinetest.fragment.ChartFragment;
+import bonlinetest.f0ris.com.b_onlinetest.fragment.ActiveChartFragment;
 import bonlinetest.f0ris.com.b_onlinetest.model.Active;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,36 +22,20 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-        if (savedInstanceState == null)
-            active = new Active("EUR/USD");
-        else
-            active = savedInstanceState.getParcelable("active");
-
-//        long time = System.currentTimeMillis();
-//        for (int i = 0; i < 1; i++) {
-        //add one record before drawing for fast start
-//            active.positions.add(new Position(new Date(1467405900624L), (float) (1+Math.random()*0.2f)));
-//        }
-
         new Thread(new Runnable() {
             @Override
             public void run() {
+                active = new Active("EUR/USD");
                 active.getPositionsUpdates();//add one record before chart drawing for fast app start
-                ChartFragment chartFragment = ChartFragment.newInstance(active);
+                ActiveChartFragment activeChartFragment = ActiveChartFragment.newInstance(active);
                 FragmentTransaction transaction = MainActivity.this.getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.content, chartFragment, ChartFragment.TAG);
+                transaction.replace(R.id.content, activeChartFragment, ActiveChartFragment.TAG);
                 transaction.commitAllowingStateLoss();
             }
         }).start();
 
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelable("active", active);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
